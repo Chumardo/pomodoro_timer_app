@@ -17,6 +17,7 @@ def reset_timer():
     window.after_cancel(timer)
     timer_label.config(text="Timer")
     canvas.itemconfig(timer_text, text="00:00")
+    check_marks.config(text="")
     global reps
     reps = 0
 
@@ -24,9 +25,9 @@ def reset_timer():
 def start_timer():
     global reps
     reps += 1
-    work_sec = WORK_MIN 
-    short_break_sec = SHORT_BREAK_MIN 
-    long_break_sec = LONG_BREAK_MIN
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
     
     if reps % 8 == 0:
         count_down(long_break_sec)
@@ -49,6 +50,8 @@ def count_down(count):
     
     
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
+    if count_min < 10:
+        canvas.itemconfig(timer_text, text=f"0{count_min}:{count_sec}")
     if count > 0:
         global timer
         timer = window.after(1000, count_down, count - 1)
