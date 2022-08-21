@@ -24,9 +24,9 @@ def reset_timer():
 def start_timer():
     global reps
     reps += 1
-    work_sec = WORK_MIN * 60
-    short_break_sec = SHORT_BREAK_MIN * 60
-    long_break_sec = LONG_BREAK_MIN * 60
+    work_sec = WORK_MIN 
+    short_break_sec = SHORT_BREAK_MIN 
+    long_break_sec = LONG_BREAK_MIN
     
     if reps % 8 == 0:
         count_down(long_break_sec)
@@ -54,6 +54,11 @@ def count_down(count):
         timer = window.after(1000, count_down, count - 1)
     else:
         start_timer()
+        marks = ""
+        work_sessions = math.floor(reps/2)
+        for _ in range(work_sessions):
+            marks += "✔"
+        check_marks.config(text=marks)
 
 # GUI Setup
 window = Tk()
@@ -79,6 +84,8 @@ btn_start.grid(column=0, row=2)
 btn_start = Button(text="Reset", highlightthickness=0, bg=GREEN, command=reset_timer, fg="white")
 btn_start.grid(column=2, row=2)
 
+check_marks = Label(fg="green", bg="black")
+check_marks.grid(column=1, row=3)
 
 
 window.mainloop()
